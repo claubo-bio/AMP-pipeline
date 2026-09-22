@@ -1,0 +1,64 @@
+<ROSETTASCRIPTS>
+
+    <SCOREFXNS>
+
+        <ScoreFunction name="beta" weights="beta"/>
+
+    </SCOREFXNS>
+
+    <RESIDUE_SELECTORS>
+
+        <Index name="core" resnums="%%core_residues%%"/>
+
+        <Index name="cleavage_site" resnums="%%cleavage_residues%%"/>
+
+    </RESIDUE_SELECTORS>
+
+    <SIMPLE_METRICS>
+
+        <SapScoreMetric
+            name="sapscore_core"
+            score_selector="core"
+            sap_calculate_selector="core"
+        />
+
+        <SapScoreMetric
+            name="total_sap"
+            custom_type="total_sap"
+        />
+
+        <SasaMetric
+            name="cleavage_sasa"
+            residue_selector="cleavage_site"
+            custom_type="cleavage_sasa"
+        />
+
+        <SasaMetric
+            name="total_sasa"
+            custom_type="total_sasa"
+        />
+
+    </SIMPLE_METRICS>
+
+    <FILTERS>
+
+    </FILTERS>
+
+    <MOVERS>
+
+        <RunSimpleMetrics
+            name="calculate_metrics"
+            metrics="sapscore_core,cleavage_sasa,total_sasa,total_sap"
+        />
+
+    </MOVERS>
+
+    <PROTOCOLS>
+
+        <Add mover_name="calculate_metrics"/>
+
+    </PROTOCOLS>
+
+    <OUTPUT scorefxn="beta"/>
+
+</ROSETTASCRIPTS>

@@ -1,0 +1,57 @@
+<ROSETTASCRIPTS>
+
+    <SCOREFXNS>
+        <ScoreFunction name="beta" weights="beta"/>
+    </SCOREFXNS>
+
+<FILTERS>
+
+    <BuriedUnsatHbonds
+        name="buns"
+        cutoff="0"
+        report_sc_heavy_atom_unsats="true"
+        scorefxn="beta"
+        residue_surface_cutoff="20.0"
+        ignore_surface_res="true"
+    />
+
+    <PackStat
+        name="packstat"
+        threshold="0.65"
+        repeats="1"
+    />
+
+</FILTERS>
+
+<SIMPLE_METRICS>
+
+    <FilterValueMetric
+        name="packstat_value"
+        filter="packstat"
+        custom_type="packstat"
+    />
+
+    <FilterValueMetric
+        name="buns_value"
+        filter="buns"
+        custom_type="buns"
+    />
+
+</SIMPLE_METRICS>
+
+    <MOVERS>
+
+        <RunSimpleMetrics
+            name="calculate_metrics"
+            metrics="packstat_value,buns_value"
+        />
+
+    </MOVERS>
+
+    <PROTOCOLS>
+
+        <Add mover_name="calculate_metrics"/>
+
+    </PROTOCOLS>
+
+</ROSETTASCRIPTS>
